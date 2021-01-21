@@ -37,12 +37,11 @@ class Form extends Component {
     },
   };
 
-  onChange = (sss, { target }) => {
-    const section = sss;
+  onChange = (name, title, value) => {
     this.setState({
-      [section]: {
-        ...this.state[section],
-        [target.name]: target.value,
+      [title]: {
+        ...this.state[title],
+        [name]: value,
       },
     });
     // console.log(sss, target.name, this.state);
@@ -128,7 +127,7 @@ class Form extends Component {
           <Grid item xs={6}>
             <Ethernet
               data={this.state.ethernet}
-              onChange={(e) => this.onChange("ethernet", e)}
+              onChange={this.onChange}
               validate={this.validate}
               //   validateSubnet={this.validateSubnetMask}
               //   validateDns={this.validateDns}
@@ -140,7 +139,7 @@ class Form extends Component {
               onCheck={this.onCheck}
               data={this.state.wireless}
               onSelect={this.onChangeSelect}
-              onChange={(e) => this.onChange("wireless", e)}
+              onChange={this.onChange}
               validate={this.validate}
               //   validateSubnet={this.validateSubnetMask}
               //   validateDns={this.validateDns}

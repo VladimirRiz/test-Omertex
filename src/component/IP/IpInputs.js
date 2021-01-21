@@ -24,8 +24,12 @@ class IpInputs extends Component {
     this.props.clear(target.name, this.props.data.title);
   };
 
+  onChange = ({ target }) => {
+    this.props.onChange(target.name, this.props.data.title, target.value);
+  };
+
   render() {
-    const { isDisabled, classes, onChange, clear, data } = this.props;
+    const { isDisabled, classes, data } = this.props;
 
     return (
       <form className={classes.root} noValidate autoComplete="off">
@@ -46,7 +50,7 @@ class IpInputs extends Component {
               onBlur: this.validateIp,
               onFocus: this.clearError,
             }}
-            onChange={onChange}
+            onChange={this.onChange}
             helperText={data.validation.ip ? "" : "Invalid IP"}
           />
 
@@ -66,7 +70,7 @@ class IpInputs extends Component {
               onBlur: this.validateSubnet,
               onFocus: this.clearError,
             }}
-            onChange={onChange}
+            onChange={this.onChange}
             helperText={data.validation.subnet ? "" : "Invalid Subnet"}
           />
           <TextField
@@ -78,7 +82,7 @@ class IpInputs extends Component {
               shrink: true,
             }}
             disabled={isDisabled}
-            onChange={onChange}
+            onChange={this.onChange}
             variant="outlined"
           />
         </div>

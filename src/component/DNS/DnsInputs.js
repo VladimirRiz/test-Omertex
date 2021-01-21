@@ -20,8 +20,13 @@ class DnsInputs extends Component {
   clearError = ({ target }) => {
     this.props.clear(target.name, this.props.data.title);
   };
+
+  onChange = ({ target }) => {
+    this.props.onChange(target.name, this.props.data.title, target.value);
+  };
+
   render() {
-    const { isDisabled, classes, onChange, data } = this.props;
+    const { isDisabled, classes, data } = this.props;
     return (
       <form className={classes.root} noValidate autoComplete="off">
         <div>
@@ -36,7 +41,7 @@ class DnsInputs extends Component {
             }}
             InputProps={{ onBlur: this.validate, onFocus: this.clearError }}
             name="dns"
-            onChange={onChange}
+            onChange={this.onChange}
             disabled={isDisabled}
             variant="outlined"
             helperText={data.validation.dns ? "" : "Invalid DNS"}
@@ -49,7 +54,7 @@ class DnsInputs extends Component {
               shrink: true,
             }}
             name="altDns"
-            onChange={onChange}
+            onChange={this.onChange}
             disabled={isDisabled}
             variant="outlined"
           />

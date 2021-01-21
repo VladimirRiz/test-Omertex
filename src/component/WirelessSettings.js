@@ -12,8 +12,6 @@ const WirelessSettings = ({
   onChange,
   checkIfEmpty,
   validate,
-  validateSubnet,
-  validateDns,
   clear,
 }) => {
   return (
