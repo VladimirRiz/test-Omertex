@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/core/styles";
-import { regExp } from "../regex";
 
 const styles = (theme) => ({
   root: {
@@ -13,57 +12,21 @@ const styles = (theme) => ({
 });
 
 class IpInputs extends Component {
-  state = {
-    address: "",
-    subnet: "",
-    validation: {
-      address: true,
-      subnet: true,
-    },
-  };
-
-  handlerChange = ({ target }) => {
-    this.setState({
-      [target.name]: target.value,
-    });
-  };
-
-  validateIp = ({ target }) => {
-    const isValid = regExp.ip.test(this.state.address);
-    this.setState({
-      validation: {
-        ...this.state.validation,
-        [target.name]: isValid,
-      },
-    });
-  };
-
-  validateSubnetMask = ({ target }) => {
-    const isValid = regExp.subnet.test(this.state.subnet);
-    this.setState({
-      validation: {
-        ...this.state.validation,
-        [target.name]: isValid,
-      },
-    });
-  };
-
-  clearError = ({ target }) => {
-    this.setState({
-      validation: {
-        ...this.state.validation,
-        [target.name]: true,
-      },
-    });
-  };
-
   render() {
-    const { isDisabled, classes } = this.props;
+    const {
+      isDisabled,
+      classes,
+      onChange,
+      validateIp,
+      validateSubnet,
+      clear,
+      data,
+    } = this.props;
     return (
       <form className={classes.root} noValidate autoComplete="off">
         <div>
           <TextField
-            error={!this.state.validation.address}
+            error={!data.validation.address}
             required
             id="address"
             label="IP address"
@@ -74,13 +37,13 @@ class IpInputs extends Component {
             disabled={isDisabled}
             variant="outlined"
             name="address"
-            InputProps={{ onBlur: this.validateIp, onFocus: this.clearError }}
-            onChange={this.handlerChange}
-            helperText={this.state.validation.address ? "" : "Invalid IP"}
+            InputProps={{ onBlur: validateIp, onFocus: clear }}
+            onChange={onChange}
+            helperText={data.validation.address ? "" : "Invalid IP"}
           />
 
           <TextField
-            error={!this.state.validation.subnet}
+            error={!data.validation.subnet}
             required
             id="mask"
             label="Subnet mask"
@@ -91,18 +54,20 @@ class IpInputs extends Component {
             disabled={isDisabled}
             variant="outlined"
             name="subnet"
-            InputProps={{ onBlur: this.validateSubnetMask }}
-            onChange={this.handlerChange}
-            helperText={this.state.validation.subnet ? "" : "Invalid Subnet"}
+            InputProps={{ onBlur: validateSubnet, onFocus: clear }}
+            onChange={onChange}
+            helperText={data.validation.subnet ? "" : "Invalid Subnet"}
           />
           <TextField
             id="gateway"
             label="Default Gateway"
             defaultValue=""
+            name="gateway"
             InputLabelProps={{
               shrink: true,
             }}
             disabled={isDisabled}
+            onChange={onChange}
             variant="outlined"
           />
         </div>

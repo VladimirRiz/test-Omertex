@@ -13,11 +13,19 @@ const styles = (theme) => ({
 
 class DnsInputs extends Component {
   render() {
-    const { isDisabled, classes } = this.props;
+    const {
+      isDisabled,
+      classes,
+      onChange,
+      validateDns,
+      clear,
+      data,
+    } = this.props;
     return (
       <form className={classes.root} noValidate autoComplete="off">
         <div>
           <TextField
+            error={!data.validation.preferredDns}
             required
             id="outlined-required"
             label="Preferred DNS server"
@@ -25,8 +33,12 @@ class DnsInputs extends Component {
             InputLabelProps={{
               shrink: true,
             }}
+            InputProps={{ onBlur: validateDns, onFocus: clear }}
+            name="preferredDns"
+            onChange={onChange}
             disabled={isDisabled}
             variant="outlined"
+            helperText={data.validation.preferredDns ? "" : "Invalid DNS"}
           />
           <TextField
             id="outlined-basic"
@@ -35,6 +47,8 @@ class DnsInputs extends Component {
             InputLabelProps={{
               shrink: true,
             }}
+            name="altDns"
+            onChange={onChange}
             disabled={isDisabled}
             variant="outlined"
           />

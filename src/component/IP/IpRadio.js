@@ -14,6 +14,7 @@ class IpAddress extends Component {
   };
 
   render() {
+    const { onChange, validateIp, validateSubnet, clear, data } = this.props;
     const { fillMode } = this.state;
     return (
       <div>
@@ -29,7 +30,14 @@ class IpAddress extends Component {
             label="Use the following IP address"
           />
         </RadioGroup>
-        <IpInputs isDisabled={fillMode === "auto" ? true : false} />
+        <IpInputs
+          isDisabled={fillMode === "auto" ? true : false}
+          data={data}
+          onChange={onChange}
+          validateIp={validateIp}
+          validateSubnet={validateSubnet}
+          clear={clear}
+        />
       </div>
     );
   }

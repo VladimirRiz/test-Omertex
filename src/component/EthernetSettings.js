@@ -1,19 +1,34 @@
 import React from "react";
-import { FormControl, FormLabel, Button } from "@material-ui/core";
+import { FormControl, FormLabel } from "@material-ui/core";
 import IpRadio from "./IP/IpRadio";
 import DnsRadio from "./DNS/DnsRadio";
 
-const EthernetSettings = () => {
+const EthernetSettings = ({
+  onChange,
+  validateIp,
+  validateSubnet,
+  validateDns,
+  clear,
+  data,
+}) => {
   return (
     <>
       <FormControl component="fieldset">
         <FormLabel component="legend">Ethernet Settings</FormLabel>
-        <IpRadio />
-        <DnsRadio />
+        <IpRadio
+          onChange={onChange}
+          validateIp={validateIp}
+          validateSubnet={validateSubnet}
+          clear={clear}
+          data={data}
+        />
+        <DnsRadio
+          onChange={onChange}
+          validateDns={validateDns}
+          clear={clear}
+          data={data}
+        />
       </FormControl>
-      <Button variant="contained" color="primary">
-        Submit
-      </Button>
     </>
   );
 };

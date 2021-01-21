@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import EthernetSettings from "./component/EthernetSettings";
+import Form from "./component/Form";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
   <React.StrictMode>
-    <EthernetSettings />
+    <Form />
   </React.StrictMode>,
   document.getElementById("root")
 );
