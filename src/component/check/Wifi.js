@@ -2,7 +2,7 @@ import React from "react";
 import { Checkbox, FormControlLabel } from "@material-ui/core";
 import WirelessSelect from "../WirelessSelect";
 
-const Wifi = ({ onCheck, data }) => {
+const Wifi = ({ onCheck, data, onSelect }) => {
   return (
     <div>
       <FormControlLabel
@@ -16,7 +16,11 @@ const Wifi = ({ onCheck, data }) => {
         }
         label="Enable wifi:"
       />
-      <WirelessSelect checked={data.checkWifi} />
+      <WirelessSelect
+        checked={data.checkWifi}
+        onSelect={onSelect}
+        name={data.name}
+      />
     </div>
   );
 };

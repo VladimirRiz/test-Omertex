@@ -21,16 +21,20 @@ class Form extends Component {
     wireless: {
       checkWifi: false,
       checkSecurity: false,
+      key: "",
+      name: "",
       address: "",
       subnet: "",
       validation: {
+        empty: false,
         address: true,
         subnet: true,
+        preferredDns: true,
       },
     },
   };
 
-  onChange = ({ target }) => {
+  onChangeEthernet = ({ target }) => {
     this.setState({
       ethernet: {
         ...this.state.ethernet,
@@ -39,8 +43,25 @@ class Form extends Component {
     });
   };
 
+  onChangeWireless = ({ target }) => {
+    this.setState({
+      wireless: {
+        ...this.state.wireless,
+        [target.name]: target.value,
+      },
+    });
+  };
+
+  onChangeSelect = ({ target }) => {
+    this.setState({
+      wireless: {
+        ...this.state.wireless,
+        name: target.value,
+      },
+    });
+  };
+
   onCheck = ({ target }) => {
-    console.log(target.name);
     this.setState({
       wireless: {
         ...this.state.wireless,
@@ -101,8 +122,21 @@ class Form extends Component {
     });
   };
 
+  checkIfEmpty = ({ target }) => {
+    const isEmpty = target.value > 0 ? false : true;
+    this.setState({
+      wireless: {
+        ...this.state.wireless,
+        validation: {
+          ...this.state.wireless.validation,
+          empty: isEmpty,
+        },
+      },
+    });
+  };
+
   showStat = () => {
-    console.log(this.state.ethernet);
+    console.log(this.state);
   };
 
   render() {
@@ -112,7 +146,7 @@ class Form extends Component {
           <Grid item xs={6}>
             <Ethernet
               data={this.state.ethernet}
-              onChange={this.onChange}
+              onChange={this.onChangeEthernet}
               validateIp={this.validateIp}
               validateSubnet={this.validateSubnetMask}
               validateDns={this.validateDns}
@@ -120,7 +154,17 @@ class Form extends Component {
             />
           </Grid>
           <Grid item xs={6}>
-            <Wireless onCheck={this.onCheck} data={this.state.wireless} />
+            <Wireless
+              onCheck={this.onCheck}
+              data={this.state.wireless}
+              onSelect={this.onChangeSelect}
+              onChange={this.onChangeWireless}
+              validateIp={this.validateIp}
+              validateSubnet={this.validateSubnetMask}
+              validateDns={this.validateDns}
+              clear={this.clearError}
+              checkIfEmpty={this.checkIfEmpty}
+            />
           </Grid>
           <Grid item xs={12}>
             <Button variant="contained" color="primary" onClick={this.showStat}>

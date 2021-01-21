@@ -2,16 +2,46 @@ import React from "react";
 import { FormControl, FormLabel } from "@material-ui/core";
 import Wifi from "./check/Wifi";
 import Security from "./check/Security";
-// import IpRadio from "./IP/IpRadio";
-// import DnsRadio from "./DNS/DnsRadio";
+import IpRadio from "./IP/IpRadio";
+import DnsRadio from "./DNS/DnsRadio";
 
-const WirelessSettings = ({ onCheck, data }) => {
+const WirelessSettings = ({
+  onCheck,
+  data,
+  onSelect,
+  onChange,
+  checkIfEmpty,
+  validateIp,
+  validateSubnet,
+  validateDns,
+  clear,
+}) => {
   return (
     <div>
       <FormControl component="fieldset">
         <FormLabel component="legend">Wireless Settings</FormLabel>
-        <Wifi onCheck={onCheck} data={data} />
-        <Security onCheck={onCheck} data={data} />
+        <Wifi onCheck={onCheck} data={data} onSelect={onSelect} />
+        <Security
+          onCheck={onCheck}
+          data={data}
+          onChange={onChange}
+          checkIfEmpty={checkIfEmpty}
+        />
+      </FormControl>
+      <FormControl disabled={!data.checkWifi}>
+        <IpRadio
+          onChange={onChange}
+          validateIp={validateIp}
+          validateSubnet={validateSubnet}
+          clear={clear}
+          data={data}
+        />
+        <DnsRadio
+          onChange={onChange}
+          validateDns={validateDns}
+          clear={clear}
+          data={data}
+        />
       </FormControl>
     </div>
   );

@@ -16,13 +16,6 @@ const styles = (theme) => ({
 class WirelessSelect extends Component {
   state = {
     open: false,
-    name: "",
-  };
-
-  onChange = ({ target }) => {
-    this.setState({
-      name: target.value,
-    });
   };
 
   onOpen = () => {
@@ -40,8 +33,8 @@ class WirelessSelect extends Component {
   };
 
   render() {
-    const { classes, checked } = this.props;
-    const { open, name } = this.state;
+    const { classes, checked, onSelect, name } = this.props;
+    const { open } = this.state;
     return (
       <div>
         <FormControl
@@ -57,7 +50,7 @@ class WirelessSelect extends Component {
             onClose={this.onClose}
             onOpen={this.onOpen}
             value={name}
-            onChange={this.onChange}
+            onChange={onSelect}
           >
             <MenuItem value="">
               <em>Please select</em>

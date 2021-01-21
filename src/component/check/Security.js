@@ -1,8 +1,8 @@
 import React from "react";
 import { Checkbox, FormControlLabel, TextField } from "@material-ui/core";
-import WirelessSelect from "../WirelessSelect";
 
-const Security = ({ onCheck, data }) => {
+const Security = ({ onCheck, data, onChange, checkIfEmpty }) => {
+  console.log(data.validation.empty);
   return (
     <div>
       <FormControlLabel
@@ -12,12 +12,13 @@ const Security = ({ onCheck, data }) => {
             checked={data.checkSecurity}
             onChange={onCheck}
             color="primary"
+            disabled={!data.checkWifi}
           />
         }
         label="Enable Wireless Security:"
       />
       <TextField
-        // error={!data.validation.preferredDns}
+        error={data.validation.empty}
         required
         id="outlined-required"
         label="Security Key"
@@ -25,12 +26,12 @@ const Security = ({ onCheck, data }) => {
         InputLabelProps={{
           shrink: true,
         }}
-        // InputProps={{ onBlur: validateDns, onFocus: clear }}
-        // name="preferredDns"
-        // onChange={onChange}
-        // disabled={isDisabled}
+        InputProps={{ onBlur: checkIfEmpty }}
+        name="key"
+        onChange={onChange}
+        disabled={!data.checkSecurity}
         variant="outlined"
-        // helperText={data.validation.preferredDns ? "" : "Invalid DNS"}
+        helperText={!data.validation.empty ? "" : "Required Field"}
       />
     </div>
   );

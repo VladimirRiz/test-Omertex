@@ -27,7 +27,7 @@ class DnsInputs extends Component {
           <TextField
             error={!data.validation.preferredDns}
             required
-            id="outlined-required"
+            id="dns-required"
             label="Preferred DNS server"
             defaultValue=""
             InputLabelProps={{
