@@ -14,7 +14,7 @@ class IpAddress extends Component {
   };
 
   render() {
-    const { onChange, validateIp, validateSubnet, clear, data } = this.props;
+    const { onChange, validate, clear, data } = this.props;
     const { fillMode } = this.state;
     return (
       <div>
@@ -34,8 +34,7 @@ class IpAddress extends Component {
           isDisabled={fillMode === "auto" ? true : false}
           data={data}
           onChange={onChange}
-          validateIp={validateIp}
-          validateSubnet={validateSubnet}
+          validate={validate}
           clear={clear}
         />
       </div>

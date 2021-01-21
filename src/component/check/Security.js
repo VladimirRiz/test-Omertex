@@ -2,7 +2,6 @@ import React from "react";
 import { Checkbox, FormControlLabel, TextField } from "@material-ui/core";
 
 const Security = ({ onCheck, data, onChange, checkIfEmpty }) => {
-  console.log(data.validation.empty);
   return (
     <div>
       <FormControlLabel

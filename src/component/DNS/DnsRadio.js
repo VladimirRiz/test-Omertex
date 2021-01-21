@@ -15,7 +15,7 @@ class IpAddress extends Component {
 
   render() {
     const { fillMode } = this.state;
-    const { validateDns, clear, data, onChange } = this.props;
+    const { validate, clear, data, onChange } = this.props;
     return (
       <div>
         <RadioGroup name="dns" value={fillMode} onChange={this.handlerChange}>
@@ -34,7 +34,7 @@ class IpAddress extends Component {
           isDisabled={fillMode === "auto" ? true : false}
           data={data}
           onChange={onChange}
-          validateDns={validateDns}
+          validate={validate}
           clear={clear}
         />
       </div>

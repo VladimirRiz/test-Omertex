@@ -11,7 +11,7 @@ const WirelessSettings = ({
   onSelect,
   onChange,
   checkIfEmpty,
-  validateIp,
+  validate,
   validateSubnet,
   validateDns,
   clear,
@@ -31,14 +31,13 @@ const WirelessSettings = ({
       <FormControl disabled={!data.checkWifi}>
         <IpRadio
           onChange={onChange}
-          validateIp={validateIp}
-          validateSubnet={validateSubnet}
+          validate={validate}
           clear={clear}
           data={data}
         />
         <DnsRadio
           onChange={onChange}
-          validateDns={validateDns}
+          validate={validate}
           clear={clear}
           data={data}
         />

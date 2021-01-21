@@ -12,23 +12,28 @@ const styles = (theme) => ({
 });
 
 class IpInputs extends Component {
+  validateIp = ({ target }) => {
+    this.props.validate(target.name, this.props.data.title);
+  };
+
+  validateSubnet = ({ target }) => {
+    this.props.validate(target.name, this.props.data.title);
+  };
+
+  clearError = ({ target }) => {
+    this.props.clear(target.name, this.props.data.title);
+  };
+
   render() {
-    const {
-      isDisabled,
-      classes,
-      onChange,
-      validateIp,
-      validateSubnet,
-      clear,
-      data,
-    } = this.props;
+    const { isDisabled, classes, onChange, clear, data } = this.props;
+
     return (
       <form className={classes.root} noValidate autoComplete="off">
         <div>
           <TextField
-            error={!data.validation.address}
+            error={!data.validation.ip}
             required
-            id="address"
+            id={`${data.title}-address`}
             label="IP address"
             defaultValue=""
             InputLabelProps={{
@@ -36,16 +41,19 @@ class IpInputs extends Component {
             }}
             disabled={isDisabled}
             variant="outlined"
-            name="address"
-            InputProps={{ onBlur: validateIp, onFocus: clear }}
+            name="ip"
+            InputProps={{
+              onBlur: this.validateIp,
+              onFocus: this.clearError,
+            }}
             onChange={onChange}
-            helperText={data.validation.address ? "" : "Invalid IP"}
+            helperText={data.validation.ip ? "" : "Invalid IP"}
           />
 
           <TextField
             error={!data.validation.subnet}
             required
-            id="mask"
+            id={`${data.title}-mask`}
             label="Subnet mask"
             defaultValue=""
             InputLabelProps={{
@@ -54,12 +62,15 @@ class IpInputs extends Component {
             disabled={isDisabled}
             variant="outlined"
             name="subnet"
-            InputProps={{ onBlur: validateSubnet, onFocus: clear }}
+            InputProps={{
+              onBlur: this.validateSubnet,
+              onFocus: this.clearError,
+            }}
             onChange={onChange}
             helperText={data.validation.subnet ? "" : "Invalid Subnet"}
           />
           <TextField
-            id="gateway"
+            id={`${data.title}-gateway`}
             label="Default Gateway"
             defaultValue=""
             name="gateway"

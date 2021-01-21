@@ -7,40 +7,45 @@ import { regExp } from "./regex";
 class Form extends Component {
   state = {
     ethernet: {
-      address: "",
+      title: "ethernet",
+      ip: "",
       gateway: "",
       subnet: "",
-      preferredDns: "",
+      dns: "",
       altDns: "",
       validation: {
-        address: true,
+        ip: true,
         subnet: true,
-        preferredDns: true,
+        dns: true,
       },
     },
     wireless: {
+      title: "wireless",
+      dns: "",
       checkWifi: false,
       checkSecurity: false,
       key: "",
       name: "",
-      address: "",
+      ip: "",
       subnet: "",
       validation: {
         empty: false,
-        address: true,
+        ip: true,
         subnet: true,
-        preferredDns: true,
+        dns: true,
       },
     },
   };
 
-  onChangeEthernet = ({ target }) => {
+  onChange = (sss, { target }) => {
+    const section = sss;
     this.setState({
-      ethernet: {
-        ...this.state.ethernet,
+      [section]: {
+        ...this.state[section],
         [target.name]: target.value,
       },
     });
+    // console.log(sss, target.name, this.state);
   };
 
   onChangeWireless = ({ target }) => {
@@ -70,53 +75,26 @@ class Form extends Component {
     });
   };
 
-  validateIp = ({ target }) => {
-    const isValid = regExp.ip.test(this.state.ethernet.address);
+  validate = (name, title) => {
+    const isValid = regExp[name].test(this.state[title][name]);
     this.setState({
-      ethernet: {
-        ...this.state.ethernet,
+      [title]: {
+        ...this.state[title],
         validation: {
-          ...this.state.ethernet.validation,
-          [target.name]: isValid,
+          ...this.state[title].validation,
+          [name]: isValid,
         },
       },
     });
   };
 
-  validateSubnetMask = ({ target }) => {
-    console.log(target.value);
-    const isValid = regExp.subnet.test(this.state.ethernet.subnet);
+  clearError = (name, title) => {
     this.setState({
-      ethernet: {
-        ...this.state.ethernet,
+      [title]: {
+        ...this.state[title],
         validation: {
-          ...this.state.ethernet.validation,
-          [target.name]: isValid,
-        },
-      },
-    });
-  };
-
-  validateDns = ({ target }) => {
-    const isValid = regExp.dns.test(this.state.ethernet.preferredDns);
-    this.setState({
-      ethernet: {
-        ...this.state.ethernet,
-        validation: {
-          ...this.state.ethernet.validation,
-          [target.name]: isValid,
-        },
-      },
-    });
-  };
-
-  clearError = ({ target }) => {
-    this.setState({
-      ethernet: {
-        ...this.state.ethernet,
-        validation: {
-          ...this.state.ethernet.validation,
-          [target.name]: true,
+          ...this.state[title].validation,
+          [name]: true,
         },
       },
     });
@@ -139,6 +117,10 @@ class Form extends Component {
     console.log(this.state);
   };
 
+  setEvent = (e) => {
+    this.onChange("ethernet", e);
+  };
+
   render() {
     return (
       <div>
@@ -146,10 +128,10 @@ class Form extends Component {
           <Grid item xs={6}>
             <Ethernet
               data={this.state.ethernet}
-              onChange={this.onChangeEthernet}
-              validateIp={this.validateIp}
-              validateSubnet={this.validateSubnetMask}
-              validateDns={this.validateDns}
+              onChange={(e) => this.onChange("ethernet", e)}
+              validate={this.validate}
+              //   validateSubnet={this.validateSubnetMask}
+              //   validateDns={this.validateDns}
               clear={this.clearError}
             />
           </Grid>
@@ -158,10 +140,10 @@ class Form extends Component {
               onCheck={this.onCheck}
               data={this.state.wireless}
               onSelect={this.onChangeSelect}
-              onChange={this.onChangeWireless}
-              validateIp={this.validateIp}
-              validateSubnet={this.validateSubnetMask}
-              validateDns={this.validateDns}
+              onChange={(e) => this.onChange("wireless", e)}
+              validate={this.validate}
+              //   validateSubnet={this.validateSubnetMask}
+              //   validateDns={this.validateDns}
               clear={this.clearError}
               checkIfEmpty={this.checkIfEmpty}
             />
