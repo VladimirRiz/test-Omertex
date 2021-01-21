@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Button } from "@material-ui/core";
+import { Button, Grid } from "@material-ui/core";
 import Ethernet from "./EthernetSettings";
+import Wireless from "./WirelessSettings";
 import { regExp } from "./regex";
 
 class Form extends Component {
@@ -18,6 +19,8 @@ class Form extends Component {
       },
     },
     wireless: {
+      checkWifi: false,
+      checkSecurity: false,
       address: "",
       subnet: "",
       validation: {
@@ -32,6 +35,16 @@ class Form extends Component {
       ethernet: {
         ...this.state.ethernet,
         [target.name]: target.value,
+      },
+    });
+  };
+
+  onCheck = ({ target }) => {
+    console.log(target.name);
+    this.setState({
+      wireless: {
+        ...this.state.wireless,
+        [target.name]: target.checked,
       },
     });
   };
@@ -95,17 +108,26 @@ class Form extends Component {
   render() {
     return (
       <div>
-        <Ethernet
-          data={this.state.ethernet}
-          onChange={this.onChange}
-          validateIp={this.validateIp}
-          validateSubnet={this.validateSubnetMask}
-          validateDns={this.validateDns}
-          clear={this.clearError}
-        />
-        <Button variant="contained" color="primary" onClick={this.showStat}>
-          Submit
-        </Button>
+        <Grid container>
+          <Grid item xs={6}>
+            <Ethernet
+              data={this.state.ethernet}
+              onChange={this.onChange}
+              validateIp={this.validateIp}
+              validateSubnet={this.validateSubnetMask}
+              validateDns={this.validateDns}
+              clear={this.clearError}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <Wireless onCheck={this.onCheck} data={this.state.wireless} />
+          </Grid>
+          <Grid item xs={12}>
+            <Button variant="contained" color="primary" onClick={this.showStat}>
+              Submit
+            </Button>
+          </Grid>
+        </Grid>
       </div>
     );
   }

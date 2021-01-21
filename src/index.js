@@ -5,9 +5,9 @@ import Form from "./component/Form";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
-  <React.StrictMode>
+  <div>
     <Form />
-  </React.StrictMode>,
+  </div>,
   document.getElementById("root")
 );
 
